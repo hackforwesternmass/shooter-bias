@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Test_Scene_Feature feature.
+ */
+
+include_once 'test_scene_feature.features.inc';
