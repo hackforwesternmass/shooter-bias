@@ -97,7 +97,7 @@ ShooterBias.watch_keys = function() {
         console.log("ima keybinding")
     });
     Mousetrap.bind('k', function() {
-        alert.log("ima keybinding")
+        console.log("ima keybinding")
     });
 
 }
