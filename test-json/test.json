@@ -3,7 +3,7 @@
   "trial_millis" : 600,
   "capture_demographics" : true,
   "reactions" :
-  [ {"id" : 1, "key" : "a"}
+  [ {"id" : 1, "key" : "a"},
     {"id" : 2,"key" : "g"},
     {"id" : 3,"key" : "l"}
   ],
