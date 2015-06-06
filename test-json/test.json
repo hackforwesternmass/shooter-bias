@@ -4,13 +4,13 @@
     {
       "trial_id": 1,
        "photos" : [
-        {"image_url" : "bg01.jpg"}, {"image_url" : "bg01a.jpg" }  ,{"image_url" : "bg01b.jpg" }, {"image_url" : "bg01c.jpg" }, {"image_url" : "bg01d.jpg"}
+        {"image_url" : "../test-json/bg01.jpg"}, {"image_url" : "../test-json/bg01a.jpg" }  ,{"image_url" : "../test-json/bg01b.jpg" }, {"image_url" : "../test-json/bg01c.jpg" }, {"image_url" : "../test-json/bg01d.jpg"}
       ] 
     }, 
     { 
       "trial_id": 2,
       "photos" : [
-      {"image_url" : "bg01.jpg"}, {"image_url" : "bg01a.jpg" }  ,{"image_url" : "bg01b.jpg" }, {"image_url" : "bg01c.jpg" }, {"image_url" : "bg01d.jpg"}
+      {"image_url" : "../test-json/bg01.jpg"}, {"image_url" : "../test-json/bg01a.jpg" }  ,{"image_url" : "../test-json/bg01b.jpg" }, {"image_url" : "../test-json/bg01c.jpg" }, {"image_url" : "../test-json/bg01d.jpg"}
     ] 
     }
   ]
