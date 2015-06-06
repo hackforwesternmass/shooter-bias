@@ -1,0 +1,17 @@
+{
+  "name": "shooter-bias",
+  "version": "0.0.1",
+  "homepage": "https://github.com/hackforwesternmass/shooter-bias",
+  "authors": [
+    "jrabbit <jackjrabbit+github@gmail.com>"
+  ],
+  "description": "A web app to allow Smith College to conduct studies on racial bias in police shootings",
+  "license": "GPL v3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
