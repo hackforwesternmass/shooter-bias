@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "paper-input": "PolymerElements/paper-input#^1.0.0",
-    "paper-material": "PolymerElements/paper-material#^1.0.0"
+    "paper-material": "PolymerElements/paper-material#^1.0.0",
+    "mousetrap": "~1.5.2"
   }
 }
