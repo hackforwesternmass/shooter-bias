@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Shooter Bias - an investigation</title>
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../bower_components/paper-input/paper-input.html">
+    <link rel="import" href="../bower_components/paper-material/paper-material.html">
+    <script src="../bower_components/mousetrap/mousetrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <style>
+    paper-material.card{
+        padding: 15px;
+    }
+    html{
+          font-family: 'Roboto', sans-serif;
+      }
+    </style>
+    <script>
+    Mousetrap.bind('4', function() { console.log("ima keybinding") });
+    </script>
+</head>
+<body>
+<paper-material elevation='1' class="card">
+    <p>im a website beep boop</p>
+</paper-material>
+</body>
+</html>
