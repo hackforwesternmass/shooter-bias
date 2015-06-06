@@ -13,5 +13,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "paper-input": "PolymerElements/paper-input#^1.0.0",
+    "paper-material": "PolymerElements/paper-material#^1.0.0"
+  }
 }
