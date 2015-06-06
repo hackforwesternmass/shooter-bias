@@ -2,8 +2,6 @@ var ShooterBias = window.ShooterBias || {};
 
 // underscores. because i normally write coffeescript.
 
-ShooterBias.current_test = function() {},
-
 ShooterBias.get_and_show_slides = function() {
     ShooterBias.get_slides(ShooterBias.show_slides);
 },
@@ -16,6 +14,7 @@ ShooterBias.get_slides = function(after) {
         after(data);
     });
 
+
 },
 
 ShooterBias.show_slides = function(data) {
@@ -23,6 +22,18 @@ ShooterBias.show_slides = function(data) {
     console.log("showing slides");
 
     // todo do we get an array of tests here or not?
+
+    // render our keys 
+    var reactions = data[0].reactions;
+
+    for( i = 0; i < reactions.length; i++){
+      $('#key_values').append("<b>" + this.key + " </b> ");
+      if(i != reactions.length -1){
+         $('#key_values').append("OR"); 
+      }
+      console.log("key = " + this.key);
+    }
+
 
     $.each(data[0].trials, function() {
 
