@@ -1,0 +1,17 @@
+[{"id":1,
+  "name":"Test #1",
+  "trials" : [
+    {
+      "trial_id": 1,
+       "photos" : [
+        {"image_url" : "bg01.jpg"}, {"image_url" : "bg01a.jpg" }  ,{"image_url" : "bg01b.jpg" }, {"image_url" : "bg01c.jpg" }, {"image_url" : "bg01d.jpg"}
+      ] 
+    }, 
+    { 
+      "trial_id": 2,
+      "photos" : [
+      {"image_url" : "bg01.jpg"}, {"image_url" : "bg01a.jpg" }  ,{"image_url" : "bg01b.jpg" }, {"image_url" : "bg01c.jpg" }, {"image_url" : "bg01d.jpg"}
+    ] 
+    }
+  ]
+}]
