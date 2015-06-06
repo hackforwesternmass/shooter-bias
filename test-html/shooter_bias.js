@@ -68,9 +68,10 @@ ShooterBias.show_slides = function(data) {
                             }
 
                         },
+
                         callback: function() {
                             var current_time = timer.msToTime(timer.lap());
-                            $('#countdown_time').val(current_time);
+                            $('#countdown_time').html(current_time);
                         },
                     });
                     timer.start(600);
