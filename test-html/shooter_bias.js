@@ -21,61 +21,77 @@ ShooterBias.show_slides = function(data) {
 
     console.log("showing slides");
 
-    // todo do we get an array of tests here or not?
+    // TODO do we get an array of tests here or not?
 
-    // render our keys 
+    // render our reaction keys 
+        // TODO description of those keys?
     var reactions = data[0].reactions;
 
     for( i = 0; i < reactions.length; i++){
-      $('#key_values').append("<b>" + this.key + " </b> ");
+  
+      $('#key_values').append("<b> " + reactions[i].key + "</b> ");
       if(i != reactions.length -1){
-         $('#key_values').append("OR"); 
+         $('#key_values').append("  OR "); 
       }
-      console.log("key = " + this.key);
+      // console.log("key = " + this.key);
     }
 
-
+    // for each trial 
     $.each(data[0].trials, function() {
 
-        // get an array of the urls
+        // get an array of just the photo urls
         var just_urls = [];
         $.each(this.photos, function() {
             just_urls.push(this.image_url);
         });
 
-        // reversing the array because we pop
+        // reverse the array because we pop
         just_urls = just_urls.reverse();
+
 
         // preload the images
         $.imgpreload(just_urls, {
+
+            // called when all are loaded 
             all: function() {
 
-                // called when all are loaded 
+                // "this" is an an array of IMG tags after precaching
+                 var cached_imgs = this;
 
-                var do_image_show = function() {
+              
+                // this function calls itself between 600ms intervals
+                var show_next_image = function() {
 
-                    var url = just_urls.pop();
+                    var img = cached_imgs.pop();
 
-                    // every 600 ms we will show an image:
+
+                    // calls complete after 600ms
                     var timer = new Tock({
                         countdown: true,
                         interval: 10,
                         complete: function() {
 
                             // if is last image capture keys
-                            if (just_urls.length == 1) {
+                            if (cached_imgs.length == 1) {
                                 ShooterBias.watch_keys();
                             }
 
                             // show next image 
-                            ShooterBias.show_slide(url);
+                            ShooterBias.show_slide(img);
+                            console.log(img);
 
-                            // start another trial 
 
-                            // show score 
+                            // start another trial here TOOD
 
-                            if (just_urls.length > 0) {
-                                do_image_show();
+
+
+                            // show score here TOOD
+
+
+
+                            // 
+                            if (cached_imgs.length > 0) {
+                                show_next_image();
                             }
 
                         },
@@ -88,7 +104,7 @@ ShooterBias.show_slides = function(data) {
                     timer.start(600);
                 }
 
-                do_image_show();
+                show_next_image();
             }
         });
     });
@@ -97,9 +113,12 @@ ShooterBias.show_slides = function(data) {
 
 
 
-ShooterBias.show_slide = function(image_url) {
-    console.log("showing " + image_url);
-    $('#photo_container').html("<img class='center-block' src='" + image_url + "' />");
+ShooterBias.show_slide = function(image) {
+
+    
+    $(image).addClass('center-block');   
+    $('#photo_container').html(image);
+     console.log("showing " + image);
 },
 
 ShooterBias.watch_keys = function() {
