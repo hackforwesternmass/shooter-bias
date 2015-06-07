@@ -29,3 +29,21 @@
 b{
   text-transform: uppercase;
 }
+
+#score_template {
+  display: none;
+}
+
+
+#score  {
+  margin-top: 
+}
+
+
+.win{
+  background-color: green;
+}
+
+.loss{
+  background-color: red;
+}

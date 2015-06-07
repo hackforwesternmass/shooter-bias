@@ -1,9 +1,14 @@
 var ShooterBias = window.ShooterBias || {};
 
-
 ShooterBias.CURRENT_TEST = {},
 
 ShooterBias.CAN_STILL_HIT_KEY = false,
+
+ShooterBias.CURRENT_SCORE = 0,
+
+ShooterBias.HIT_KEY = false,
+
+ShooterBias.SCORE_TEXT = "",
 
 ShooterBias.getAndShowSlides = function() {
     ShooterBias.getSlides(ShooterBias.showSlides);
@@ -16,8 +21,6 @@ ShooterBias.getSlides = function(after) {
     }).done(function(data) {
         after(data);
     });
-
-
 },
 
 // utility function to get a photo froom an array of photos based on it's url 
@@ -37,7 +40,6 @@ ShooterBias.showSlides = function(data) {
 
     // TODO do we get an array of tests here or not?
 
-
     // render our reaction keys on screen:
     // TODO description of those keys?
     var reactions = data[0].reactions;
@@ -49,9 +51,7 @@ ShooterBias.showSlides = function(data) {
         }
     }
 
-
     var allTrials = data[0].trials;
-
     // this function gets called recursively until there are no trials to be run
     var runNextTrial = function() {
 
@@ -82,7 +82,6 @@ ShooterBias.showSlides = function(data) {
                 // this function calls itself between 600ms intervals
                 var showNextImage = function() {
 
-
                     // pop next image off of the array
                     var img = cached_imgs.pop();
                     if (img != undefined) {
@@ -92,6 +91,8 @@ ShooterBias.showSlides = function(data) {
                         if (cached_imgs.length == 0) {
                             showLast = true;
                             ShooterBias.CAN_STILL_HIT_KEY = true;
+                            ShooterBias.HIT_KEY = false;
+                            ShooterBias.SCORE_TEXT = "ARE TOO SLOW";
                             var currentPhoto = ShooterBias.getPhotoFromUrl(trialPhotos, $(img).attr('src'));
                             ShooterBias.watchKeys(reactions, currentPhoto);
                         }
@@ -103,10 +104,9 @@ ShooterBias.showSlides = function(data) {
                             interval: 10,
                             complete: function() {
 
-                                console.log("timer complete");
                                 ShooterBias.CAN_STILL_HIT_KEY = false;
 
-                                // show next image 
+                                // actually show next image 
                                 ShooterBias.showSlide(img);
 
 
@@ -115,10 +115,22 @@ ShooterBias.showSlides = function(data) {
                                     showNextImage();
                                 } else {
 
+
+                                    // // if a key wasn't pressed, say too slow
+                                    // if (ShooterBias.CAN_STILL_HIT_KEY && !ShooterBias.HIT_KEY) {
+                                    //     console.log("didnt hit a key at all");
+                                    //     ShooterBias.SCORE_TEXT = "ARE TOO SLOW";
+                                    // }
+
+                                    // show score
+                                    ShooterBias.showScore();
+
                                     // otherwise start another trial here    
                                     if (allTrials.length > 0) {
                                         runNextTrial();
                                     }
+
+
                                 }
                             },
                             callback: function() {
@@ -139,28 +151,23 @@ ShooterBias.showSlides = function(data) {
     runNextTrial(); // run first trial
 },
 
-
 ShooterBias.showSlide = function(image) {
     $(image).addClass('center-block');
     $('#photo_container').html(image);
 },
 
-
 // here we watch the keystrokes using mousetrap 
 ShooterBias.watchKeys = function(reactions, photo) {
 
-    console.log("watchKeys");
 
     // iterate through all of the possible reaction keys
     for (i = 0; i < reactions.length; i++) {
 
-
         var currentReaction = reactions[i];
 
         // iterate through the values for our reactions and bind a positive or negative outcome to the key
-        for (x = 0; x < photo.reaction_values; x++) {
-
-            var reactionValue = photo.reaction_values[x];
+        for (rvindex = 0; rvindex < photo.reactions_values.length; rvindex++) {
+            var reactionValue = photo.reactions_values[rvindex];
             if (reactionValue.reaction_id == currentReaction.id) {
                 if (reactionValue.is_positive) {
                     Mousetrap.bind(currentReaction.key, ShooterBias.positiveKey);
@@ -170,45 +177,49 @@ ShooterBias.watchKeys = function(reactions, photo) {
             }
         }
     }
-
 },
 
 
 // here we will increment or decrement the score and show it
 ShooterBias.positiveKey = function() {
 
-    if (ShooterBias.CAN_STILL_HIT_KEY) {
 
+    if (ShooterBias.CAN_STILL_HIT_KEY) {
         // only allow a key hit once 
         ShooterBias.CAN_STILL_HIT_KEY = false;
-
-
-        console.log("show score!");
-
-        // TODO add to score here...
-
-    } else {
-
-
-        // TODO show too slow 
-
-        console.log("showing too slow");
-
-    }
+        ShooterBias.HIT_KEY = true;
+        ShooterBias.CURRENT_SCORE = ShooterBias.CURRENT_SCORE + 1;
+        ShooterBias.SCORE_TEXT = "WON";
+    } 
     console.log("positiveKey");
 },
 
 ShooterBias.negativeKey = function() {
-    console.log("positiveKey");
+
+    if (ShooterBias.CAN_STILL_HIT_KEY) {
+        // only allow a key hit once 
+        ShooterBias.CAN_STILL_HIT_KEY = false;
+        ShooterBias.HIT_KEY = true;
+        ShooterBias.SCORE_TEXT = "LOST";
+    } 
+
+    console.log("negativeKey");
+
+},
+
+ShooterBias.showScore = function() {
+    score = $('#score_template').clone();
+    score_html = $(score).html();
+    score_html = score_html.replace("{{score}}", ShooterBias.CURRENT_SCORE);
+    score_html = score_html.replace("{{winlose}}", ShooterBias.SCORE_TEXT);
+    $('#photo_container').html(score_html);
 }
 
 
 // between trials show score
 
-
 // only catch keys on last photo 
 
 // between screens tell if timed out
-
 
 // editable milliseconds TODO
