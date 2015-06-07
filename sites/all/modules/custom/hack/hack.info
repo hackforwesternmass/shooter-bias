@@ -1,0 +1,6 @@
+name = Hack
+description = Hack Mod
+package = Other
+core = 7.x
+dependencies[] = services
+dependencies[] = rest_server

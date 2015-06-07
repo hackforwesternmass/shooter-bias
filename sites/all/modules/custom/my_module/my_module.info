@@ -1,0 +1,6 @@
+name = My Module
+description = My custom Drupal module.
+package = Other
+core = 7.x
+dependencies[] = services
+dependencies[] = rest_server
