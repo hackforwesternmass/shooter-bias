@@ -17,9 +17,13 @@
   "dependencies": {
     "paper-input": "PolymerElements/paper-input#^1.0.0",
     "paper-material": "PolymerElements/paper-material#^1.0.0",
-    "tock" : "1.0.8",
-    "underscore" : "1.8.3", 
-    "jquery.imgpreload" : "1.6.2",
-    "mousetrap": "~1.5.2"
+    "tock": "1.0.8",
+    "underscore": "1.8.3",
+    "jquery.imgpreload": "1.6.2",
+    "mousetrap": "~1.5.2",
+    "paper-drawer-panel": "PolymerElements/paper-drawer-panel#^1.0.0",
+    "paper-header-panel": "PolymerElements/paper-header-panel#^1.0.0",
+    "paper-toolbar": "PolymerElements/paper-toolbar#^1.0.0",
+    "paper-icon-button": "PolymerElements/paper-icon-button#^1.0.0"
   }
 }

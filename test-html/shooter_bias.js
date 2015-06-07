@@ -1,3 +1,5 @@
+const milliseconds_display = 600;
+
 var ShooterBias = window.ShooterBias || {};
 
 // underscores. because i normally write coffeescript.
@@ -59,7 +61,7 @@ ShooterBias.show_slides = function(data) {
                     // every 600 ms we will show an image:
                     var timer = new Tock({
                         countdown: true,
-                        interval: 10,
+                        interval: 10, //How often, in milliseconds, that the clock will tick.
                         complete: function() {
 
                             // if is last image capture keys
@@ -85,7 +87,7 @@ ShooterBias.show_slides = function(data) {
                             $('#countdown_time').html(current_time);
                         },
                     });
-                    timer.start(600);
+                    timer.start(milliseconds_display);
                 }
 
                 do_image_show();
@@ -106,10 +108,10 @@ ShooterBias.watch_keys = function() {
 
 
     Mousetrap.bind('s', function() {
-        console.log("ima keybinding")
+        console.log("Shoot!")
     });
     Mousetrap.bind('k', function() {
-        console.log("ima keybinding")
+        console.log("Not Shoot!")
     });
 
 }

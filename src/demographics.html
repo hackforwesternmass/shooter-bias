@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- This probably won't be used -->
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -8,6 +9,11 @@
     <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../bower_components/paper-input/paper-input.html">
     <link rel="import" href="../bower_components/paper-material/paper-material.html">
+    <link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+    <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+    <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+    <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <style>
     paper-material.card{
@@ -19,15 +25,40 @@
     </style>
 </head>
 <body>
-<paper-material elevation='1' class="card">
-<label>gender</label>
-<select>
-    <option>Pants</option>
-    <option>Skirt</option>
-</select>
-<paper-input type="number" label="Age" name="age"></paper-input>
-<paper-input label="School" name="school"></paper-input>
-<paper-input label="Gender" name="gender"></paper-input>
-</paper-material>
+<paper-drawer-panel id="drawerPanel" responsive-width="1280px">
+
+  <div class="nav" drawer>
+    <!-- Nav Content -->
+  </div>
+
+  <paper-header-panel class="main" main mode="waterfall">
+
+    <!-- Main Toolbar -->
+    <paper-toolbar>
+      <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+      <div title>Shooter Bias: an investigation</div>
+    </paper-toolbar>
+
+    <!-- Main Content -->
+    <div class="content">
+    <paper-material elevation='1' class="card">
+    <label>gender</label>
+    <select>
+        <option>Pants</option>
+        <option>Skirt</option>
+    </select>
+    <paper-input type="number" label="Age" name="age"></paper-input>
+    <paper-input label="School" name="school"></paper-input>
+    <paper-input label="Gender" name="gender"></paper-input>
+    <paper-input label="Race" name="race"></paper-input>
+
+    </paper-material>
+    </div>
+
+  </paper-header-panel>
+
+</paper-drawer-panel>
+
+
 </body>
 </html>

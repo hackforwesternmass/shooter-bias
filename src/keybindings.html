@@ -8,23 +8,55 @@
     <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../bower_components/paper-input/paper-input.html">
     <link rel="import" href="../bower_components/paper-material/paper-material.html">
+    <link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+    <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+    <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+    <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
     <script src="../bower_components/mousetrap/mousetrap.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <style>
     paper-material.card{
         padding: 15px;
+        margin: 1px;
     }
     html{
           font-family: 'Roboto', sans-serif;
       }
+    .nav{
+        background-color: gray;
+    }
     </style>
     <script>
-    Mousetrap.bind('4', function() { console.log("ima keybinding") });
+    Mousetrap.bind('j', function() { console.log("shoot!") });      
+    Mousetrap.bind('f', function() { console.log("not shoot!"); Mousetrap.unbind(["j", "f"]); });
     </script>
 </head>
 <body>
-<paper-material elevation='1' class="card">
-    <p>im a website beep boop</p>
-</paper-material>
+<paper-drawer-panel id="drawerPanel" responsive-width="1280px">
+
+  <div class="nav" drawer>
+    <!-- Nav Content -->
+  </div>
+
+  <paper-header-panel class="main" main mode="waterfall">
+
+    <!-- Main Toolbar -->
+    <paper-toolbar>
+      <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+      <div title>Shooter Bias: an investigation</div>
+    </paper-toolbar>
+
+    <!-- Main Content -->
+    <div class="content">
+    <paper-material elevation='1' class="card">
+        <p>im a website beep boop</p>
+    </paper-material>
+    </div>
+
+  </paper-header-panel>
+
+</paper-drawer-panel>
+
 </body>
 </html>
