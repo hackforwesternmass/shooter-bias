@@ -1,4 +1,4 @@
-name = My Module
+name = Hackathon Module
 description = My custom Drupal module.
 package = Other
 core = 7.x
