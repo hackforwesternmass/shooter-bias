@@ -37,7 +37,25 @@ function _my_module_test($fn) {
     ->execute()
     ->fetchAssoc();
 
+    $test = node_load($node['nid']);
+    // each response option
+    $response_options = [];
+    foreach ($test->field_response_options['und'] as $tid){
+		$response_options[] = taxonomy_term_load($tid['target_id']);
+	}
 
-  return node_load($node['nid']);
+    // each trial node
+    $trials = [];
+    foreach ($test->field_trials['und'] as $nid){
+		$trials[] = node_load($nid['target_id']);
+	}
+
+	$returnable = [
+		'test' => $test,
+		'response_options' => $response_options,
+		'trials' => $trials
+	];
+  
+	return $returnable;
 
 }
