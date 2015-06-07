@@ -31,7 +31,7 @@ function _my_module_test($fn) {
 
 	$node = db_select('node', 'n')
     ->fields('n')
-    ->condition('type', 'article','=')
+    ->condition('type', 'test','=')
     ->condition('status', 0,'>')
     ->orderBy('created', 'DESC')
     ->execute()
