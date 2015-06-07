@@ -16,12 +16,24 @@ function json_endpoint_default_services_endpoint() {
   $endpoint->name = 'json_output';
   $endpoint->server = 'rest_server';
   $endpoint->path = 'api';
-  $endpoint->authentication = array();
+  $endpoint->authentication = array(
+    'services' => 'services',
+  );
   $endpoint->server_settings = array();
   $endpoint->resources = array(
+    'node' => array(
+      'operations' => array(
+        'create' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'tests' => array(
       'operations' => array(
         'retrieve' => array(
+          'enabled' => '1',
+        ),
+        'create' => array(
           'enabled' => '1',
         ),
       ),
