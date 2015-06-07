@@ -38,8 +38,6 @@ ShooterBias.showSlides = function(data) {
     // TODO do we get an array of tests here or not?
 
 
-
-
     // render our reaction keys on screen:
     // TODO description of those keys?
     var reactions = data[0].reactions;
@@ -52,12 +50,13 @@ ShooterBias.showSlides = function(data) {
     }
 
 
-    // for each trial 
-    for(t=0; t < data[0].trials.length; t++) {
+    var allTrials = data[0].trials;
 
-        var trial =  data[0].trials[t];
+    // this function gets called recursively until there are no trials to be run
+    var runNextTrial = function() {
+
+        var trial = allTrials.pop();
         var trialPhotos = trial.photos;
-
 
         // get an array of just the photo urls
         var just_urls = [];
@@ -65,14 +64,11 @@ ShooterBias.showSlides = function(data) {
             just_urls.push(this.image_url);
         });
 
-        
+
         // reverse the array because we pop
         just_urls = just_urls.reverse();
 
 
-
-        ///// need to block here:
-        
         // preload the images
         $.imgpreload(just_urls, {
 
@@ -90,7 +86,7 @@ ShooterBias.showSlides = function(data) {
                     // pop next image off of the array
                     var img = cached_imgs.pop();
                     if (img != undefined) {
-                        
+
 
                         // if this is the last image in array, capture key strokes:
                         if (cached_imgs.length == 0) {
@@ -117,31 +113,30 @@ ShooterBias.showSlides = function(data) {
                                 // if there are more images to show, call showNextImage
                                 if (cached_imgs.length > 0) {
                                     showNextImage();
+                                } else {
+
+                                    // otherwise start another trial here    
+                                    if (allTrials.length > 0) {
+                                        runNextTrial();
+                                    }
                                 }
-
-                                // else  start another trial here TODO
-
-
                             },
-
                             callback: function() {
-
-                                // the ui is updated at an increment:
+                                // the timer in ui is updated at an increment via this callback
                                 var current_time = timer.msToTime(timer.lap());
                                 $('#countdown_time').html(current_time);
                             },
                         });
                     }
 
-
                     timer.start(600);
                 }
-
-                showNextImage(); // first init
+                showNextImage(); // show first images
             }
         });
     }
 
+    runNextTrial(); // run first trial
 },
 
 
