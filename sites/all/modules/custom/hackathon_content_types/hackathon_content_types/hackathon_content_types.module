@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the hackathon content types feature.
- */
-
-include_once 'hackathon_content_types.features.inc';
