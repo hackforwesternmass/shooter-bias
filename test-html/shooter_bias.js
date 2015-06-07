@@ -10,6 +10,16 @@ ShooterBias.HIT_KEY = false,
 
 ShooterBias.SCORE_TEXT = "",
 
+ShooterBias.TEST_RESULTS = [],
+
+ShooterBias.CURRENT_TIMER = {},
+
+ShooterBias.CURRENT_TIME = {},
+
+ShooterBias.CURRENT_REACTION_ID = 0,
+
+ShooterBias.KEY_PRESSED = '',
+
 ShooterBias.getAndShowSlides = function() {
     ShooterBias.getSlides(ShooterBias.showSlides);
 },
@@ -34,6 +44,18 @@ ShooterBias.getPhotoFromUrl = function(photos, url) {
     return null;
 },
 
+// utility function to get reactions from a key
+ShooterBias.getReactionFromKey = function(reactions, key) {
+    console.log("getReactionFromKey");
+    for (i = 0; i < reactions.length; i++) {
+        var reaction = reactions[i];
+        if(reaction.key == key){
+            return reaction;
+        }
+    }
+    return null;
+},
+
 ShooterBias.showSlides = function(data) {
 
     console.log("showing slides");
@@ -42,11 +64,11 @@ ShooterBias.showSlides = function(data) {
 
     // render our reaction keys on screen:
     // TODO description of those keys?
-    var reactions = data[0].reactions;
+    var possibleReactions = data[0].reactions;
 
-    for (i = 0; i < reactions.length; i++) {
-        $('#key_values').append("<b> " + reactions[i].key + "</b> ");
-        if (i != reactions.length - 1) {
+    for (i = 0; i < possibleReactions.length; i++) {
+        $('#key_values').append("<b> " + possibleReactions[i].key + "</b> ");
+        if (i != possibleReactions.length - 1) {
             $('#key_values').append("  OR ");
         }
     }
@@ -94,12 +116,12 @@ ShooterBias.showSlides = function(data) {
                             ShooterBias.HIT_KEY = false;
                             ShooterBias.SCORE_TEXT = "ARE TOO SLOW";
                             var currentPhoto = ShooterBias.getPhotoFromUrl(trialPhotos, $(img).attr('src'));
-                            ShooterBias.watchKeys(reactions, currentPhoto);
+                            ShooterBias.watchKeys(possibleReactions, currentPhoto);
                         }
 
 
                         // calls complete after 600ms
-                        var timer = new Tock({
+                        ShooterBias.CURRENT_TIMER = new Tock({
                             countdown: true,
                             interval: 10,
                             complete: function() {
@@ -125,6 +147,10 @@ ShooterBias.showSlides = function(data) {
                                     // show score
                                     ShooterBias.showScore();
 
+                                    var performedReaction = ShooterBias.getReactionFromKey(possibleReactions, ShooterBias.KEY_PRESSED);
+
+                                    ShooterBias.saveResult(trial.id, (performedReaction ? performedReaction.id : "0") , ShooterBias.CURRENT_TIME);
+
                                     // otherwise start another trial here    
                                     if (allTrials.length > 0) {
                                         runNextTrial();
@@ -135,13 +161,13 @@ ShooterBias.showSlides = function(data) {
                             },
                             callback: function() {
                                 // the timer in ui is updated at an increment via this callback
-                                var current_time = timer.msToTime(timer.lap());
+                                var current_time = ShooterBias.CURRENT_TIMER.msToTime(ShooterBias.CURRENT_TIMER.lap());
                                 $('#countdown_time').html(current_time);
                             },
                         });
                     }
 
-                    timer.start(600);
+                    ShooterBias.CURRENT_TIMER.start(600);
                 }
                 showNextImage(); // show first images
             }
@@ -156,7 +182,7 @@ ShooterBias.showSlide = function(image) {
     $('#photo_container').html(image);
 },
 
-// here we watch the keystrokes using mousetrap 
+// watch the keystrokes using mousetrap 
 ShooterBias.watchKeys = function(reactions, photo) {
 
 
@@ -180,28 +206,33 @@ ShooterBias.watchKeys = function(reactions, photo) {
 },
 
 
-// here we will increment or decrement the score and show it
-ShooterBias.positiveKey = function() {
+// increment or decrement the score and show it
+ShooterBias.positiveKey = function(e) {
 
+    console.log("KEY " + e);
 
     if (ShooterBias.CAN_STILL_HIT_KEY) {
         // only allow a key hit once 
+        ShooterBias.CURRENT_TIME = ShooterBias.CURRENT_TIMER.msToTime(ShooterBias.CURRENT_TIMER.lap());
         ShooterBias.CAN_STILL_HIT_KEY = false;
         ShooterBias.HIT_KEY = true;
         ShooterBias.CURRENT_SCORE = ShooterBias.CURRENT_SCORE + 1;
         ShooterBias.SCORE_TEXT = "WON";
-    } 
+    }
     console.log("positiveKey");
 },
 
-ShooterBias.negativeKey = function() {
+ShooterBias.negativeKey = function(e) {
+
+     console.log("KEY " + e);
 
     if (ShooterBias.CAN_STILL_HIT_KEY) {
         // only allow a key hit once 
+        ShooterBias.CURRENT_TIME = ShooterBias.CURRENT_TIMER.msToTime(ShooterBias.CURRENT_TIMER.lap());
         ShooterBias.CAN_STILL_HIT_KEY = false;
         ShooterBias.HIT_KEY = true;
         ShooterBias.SCORE_TEXT = "LOST";
-    } 
+    }
 
     console.log("negativeKey");
 
@@ -213,6 +244,17 @@ ShooterBias.showScore = function() {
     score_html = score_html.replace("{{score}}", ShooterBias.CURRENT_SCORE);
     score_html = score_html.replace("{{winlose}}", ShooterBias.SCORE_TEXT);
     $('#photo_container').html(score_html);
+},
+
+ShooterBias.saveResult = function(trialId, reactionId, totalTime) {
+
+    console.log("trial = " + trialId + "react = " + reactionId + "total= " +  totalTime);
+    // put our results into drupal names:
+    ShooterBias.TEST_RESULTS.push({
+        "field_reaction_id": reactionId,
+        "field_trial_id": trialId,
+        "field_reaction_time" : totalTime
+    });
 }
 
 
