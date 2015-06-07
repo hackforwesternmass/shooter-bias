@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the json endpoint feature.
+ */
+
+include_once 'json_endpoint.features.inc';

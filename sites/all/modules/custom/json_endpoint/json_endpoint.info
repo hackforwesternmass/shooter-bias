@@ -1,0 +1,11 @@
+name = json endpoint
+description = JSON endpoint
+core = 7.x
+package = Features
+version = 7.x-1.0
+project = json_endpoint
+dependencies[] = ctools
+dependencies[] = services
+features[ctools][] = services:services:3
+features[features_api][] = api:2
+features[services_endpoint][] = json_output
