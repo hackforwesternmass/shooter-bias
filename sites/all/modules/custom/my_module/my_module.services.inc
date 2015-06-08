@@ -5,10 +5,27 @@ function my_module_services_resources() {
    'tests' => array(
      'operations' => array(
        'retrieve' => array(
-         'help' => 'Drupal 7 Services 3 test',
+         'help' => 'JSON tests endpoint',
          'callback' => '_my_module_test',
          'access callback' => 'user_access',
          'access arguments' => array('access content'),
+         'access arguments append' => FALSE,
+         'args' => array(
+           array(
+             'name' => 'fn',
+             'type' => 'string',
+             'description' => 'Function to perform',
+             'source' => array('path' => '0'),
+             'optional' => TRUE,
+             'default' => '0',
+           ),
+         ),
+       ),
+       'create' => array(
+         'help' => 'JSON test result save',
+         'callback' => '_my_module_test_save',
+         'access callback' => 'user_access',
+         'access arguments' => array('create result content'),
          'access arguments append' => FALSE,
          'args' => array(
            array(
@@ -26,6 +43,12 @@ function my_module_services_resources() {
  );
   return $api;
 }
+
+function _my_module_test_save($fn) {
+
+	return 'hello';
+}
+
 
 function _my_module_test($fn) {
 

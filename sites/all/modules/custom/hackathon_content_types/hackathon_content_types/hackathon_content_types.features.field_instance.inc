@@ -155,7 +155,7 @@ function hackathon_content_types_field_default_field_instances() {
         'path' => '',
         'size' => 60,
       ),
-      'type' => 'entityreference_autocomplete_tags',
+      'type' => 'entityreference_autocomplete',
       'weight' => 5,
     ),
   );
