@@ -14,7 +14,7 @@ ShooterBias.TEST_RESULTS = [],
 
 ShooterBias.CURRENT_TIMER = {},
 
-ShooterBias.CURRENT_TIME = {},
+ShooterBias.CURRENT_TIME = -1,
 
 ShooterBias.CURRENT_REACTION_ID = 0,
 
@@ -26,7 +26,7 @@ ShooterBias.getAndShowSlides = function() {
 
 ShooterBias.getSlides = function(after) {
     console.log("getting slides");
-    $.ajax('/test-json//test.json').error(function() {
+    $.ajax('/sites/all/themes/bootstrap/hackathon/test-json/test.json').error(function() {
         alert("An error occurred when getting test json");
     }).done(function(data) {
         after(data);
@@ -56,6 +56,10 @@ ShooterBias.getReactionFromKey = function(reactions, key) {
     return null;
 },
 
+ShooterBias.getDrupalAssetUrl = function(url){
+    return "/sites/all/themes/bootstrap/hackathon/" + url;
+},
+
 ShooterBias.showSlides = function(data) {
 
     console.log("showing slides");
@@ -83,6 +87,7 @@ ShooterBias.showSlides = function(data) {
         // get an array of just the photo urls
         var just_urls = [];
         $.each(trialPhotos, function() {
+            this.image_url = ShooterBias.getDrupalAssetUrl(this.image_url);
             just_urls.push(this.image_url);
         });
 
@@ -115,6 +120,7 @@ ShooterBias.showSlides = function(data) {
                             ShooterBias.CAN_STILL_HIT_KEY = true;
                             ShooterBias.HIT_KEY = false;
                             ShooterBias.SCORE_TEXT = "ARE TOO SLOW";
+                            ShooterBias.KEY_PRESSED = ''
                             var currentPhoto = ShooterBias.getPhotoFromUrl(trialPhotos, $(img).attr('src'));
                             ShooterBias.watchKeys(possibleReactions, currentPhoto);
                         }
@@ -136,13 +142,6 @@ ShooterBias.showSlides = function(data) {
                                 if (cached_imgs.length > 0) {
                                     showNextImage();
                                 } else {
-
-
-                                    // // if a key wasn't pressed, say too slow
-                                    // if (ShooterBias.CAN_STILL_HIT_KEY && !ShooterBias.HIT_KEY) {
-                                    //     console.log("didnt hit a key at all");
-                                    //     ShooterBias.SCORE_TEXT = "ARE TOO SLOW";
-                                    // }
 
                                     // show score
                                     ShooterBias.showScore();
@@ -209,8 +208,6 @@ ShooterBias.watchKeys = function(reactions, photo) {
 // increment or decrement the score and show it
 ShooterBias.positiveKey = function(e) {
 
-    console.log("KEY " + e);
-
     if (ShooterBias.CAN_STILL_HIT_KEY) {
         // only allow a key hit once 
         ShooterBias.CURRENT_TIME = ShooterBias.CURRENT_TIMER.msToTime(ShooterBias.CURRENT_TIMER.lap());
@@ -218,13 +215,12 @@ ShooterBias.positiveKey = function(e) {
         ShooterBias.HIT_KEY = true;
         ShooterBias.CURRENT_SCORE = ShooterBias.CURRENT_SCORE + 1;
         ShooterBias.SCORE_TEXT = "WON";
+        ShooterBias.KEY_PRESSED = String.fromCharCode(e.keyCode);
     }
     console.log("positiveKey");
 },
 
 ShooterBias.negativeKey = function(e) {
-
-     console.log("KEY " + e);
 
     if (ShooterBias.CAN_STILL_HIT_KEY) {
         // only allow a key hit once 
@@ -232,6 +228,7 @@ ShooterBias.negativeKey = function(e) {
         ShooterBias.CAN_STILL_HIT_KEY = false;
         ShooterBias.HIT_KEY = true;
         ShooterBias.SCORE_TEXT = "LOST";
+        ShooterBias.KEY_PRESSED = String.fromCharCode(e.keyCode);
     }
 
     console.log("negativeKey");
@@ -249,6 +246,8 @@ ShooterBias.showScore = function() {
 ShooterBias.saveResult = function(trialId, reactionId, totalTime) {
 
     console.log("trial = " + trialId + "react = " + reactionId + "total= " +  totalTime);
+   
+
     // put our results into drupal names:
     ShooterBias.TEST_RESULTS.push({
         "field_reaction_id": reactionId,

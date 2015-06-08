@@ -1,9 +1,46 @@
-<p>Drop the JS app HTML in here, sites/all/themes/bootstrap/node--shell.tpl.php</p>
+<html>
 
-<p>Add any assets to sites/all/themes/bootstrap/hackathon</p>
+  <!-- /sites/all/themes/bootstrap/hackathon = drupal asset root -->
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="/sites/all/themes/bootstrap/hackathon/shooter_bias.js"></script>
+  <script src="../bower_components/tock/tock.js"></script>
+  <script src="../bower_components/underscore/underscore.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="../bower_components/jquery.imgpreload/jquery.imgpreload.js"></script>
+  <script src="../bower_components/mousetrap/mousetrap.js"></script>
+  
+   <script>
+    ShooterBias.getAndShowSlides();
+  </script>
 
-<p>Change asset URLs to /sites/all/themes/bootstrap/hackathon/[asset]</p>
+  
+  <link href="/sites/all/themes/bootstrap/hackathon/shooter_bias.css" rel="stylesheet" type="text/css"/>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 
-<p>Otherwise all of our work will be completely destroyed if someone tries to update Drupal without us there to tell them how to save it :(</p>
+  <div id="shooter_container" class="container">
+    <div id="photo_container">
 
-<p>API auth token can be loaded from GET /services/session/token and used for session auth (https://groups.drupal.org/node/358308)</p>
+     </div>
+
+      <h3 class="text-center">Hit Key</h3>
+
+      <div id="key_values" class="text-center">
+      </div>
+
+      <h4 id="countdown_time" class="text-center">
+      </h4>
+
+  </div>
+
+  <div id="score_template" class="center-block">
+    <h1 class="text-center">Score: </h1>
+
+    <h2 class="text-center">
+      {{score}}
+    </h2>
+
+    <h2 class="text-center">
+      YOU {{winlose}}
+    </h2>
+  </div>
+</html>

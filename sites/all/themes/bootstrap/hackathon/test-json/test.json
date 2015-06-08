@@ -1,0 +1,42 @@
+[{"id":1,
+  "name":"Test #1",
+  "trial_millis" : 600,
+  "capture_demographics" : true,
+  "reactions" :
+  [ {"id" : 1, "key" : "a"},
+    {"id" : 2,"key" : "g"},
+    {"id" : 3,"key" : "l"}
+  ],
+  "trials" : [
+    {
+      "trial_id": 1,
+      "photos" : [
+        {"image_url" : "bg01.jpg",
+        "reactions_values" : [{"reaction_id": 1, "is_positive" : true }, {"reaction_id":2, "is_positive" : true }, {"reaction_id": 3, "is_positive" : true }]},
+        {"image_url" : "bg01a.jpg",
+        "reactions_values" : [{"reaction_id": 1, "is_positive" : true }, {"reaction_id":2, "is_positive" : false }, {"reaction_id": 3, "is_positive" : false }] },
+        {"image_url" : "bg01b.jpg",
+        "reactions_values" : [{"reaction_id": 1, "is_positive" : true }, {"reaction_id":2, "is_positive" : false }, {"reaction_id": 3, "is_positive" : true }] },
+        {"image_url" : "bg01c.jpg",
+        "reactions_values" : [{"reaction_id": 1, "is_positive" : false }, {"reaction_id":2, "is_positive" : true }, {"reaction_id": 3, "is_positive" : true }] },
+        {"image_url" : "bg01d.jpg",
+        "reactions_values" : [{"reaction_id": 1, "is_positive" : true }, {"reaction_id":2, "is_positive" : false }, {"reaction_id": 3, "is_positive" : true }]}
+      ]
+    },
+    {
+      "trial_id": 2,
+      "photos" : [
+        {"image_url" : "bg01.jpg",
+        "reactions_values" : [{"reaction_id": 1, "is_positive" : true }, {"reaction_id":2, "is_positive" : true }, {"reaction_id": 3, "is_positive" : false }]},
+        {"image_url" : "bg01a.jpg",
+        "reactions_values" : [{"reaction_id": 1, "is_positive" : false }, {"reaction_id":2, "is_positive" : true }, {"reaction_id": 3, "is_positive" : false }] },
+        {"image_url" : "bg01b.jpg",
+        "reactions_values" : [{"reaction_id": 1, "is_positive" : true }, {"reaction_id":2, "is_positive" : false }, {"reaction_id": 3, "is_positive" : false }] },
+        {"image_url" : "bg01c.jpg",
+        "reactions_values" : [{"reaction_id": 1, "is_positive" : true }, {"reaction_id":2, "is_positive" : false }, {"reaction_id": 3, "is_positive" : false }] },
+        {"image_url" : "bg01d.jpg",
+        "reactions_values" : [{"reaction_id": 1, "is_positive" : true }, {"reaction_id":2, "is_positive" : true }, {"reaction_id": 3, "is_positive" : false }]}
+      ]
+    }
+  ]
+}]
